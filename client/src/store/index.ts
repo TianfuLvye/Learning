@@ -243,7 +243,8 @@ export const useExercises = create<ExerciseState>()(
         })),
       clear: () => {
         for (const t of ['mcq', 'cloze', 'qa'] as const) generateControllers[t]?.abort();
-        set({ sets: {}, answers: {}, results: {}, qa: {}, errors: {}, loading: {} });
+        // 题目不按文档分开存放，换文档时要丢掉。作答、判分和问答草稿按路径保留。
+        set({ sets: {}, errors: {}, loading: {} });
       },
     }),
     {
