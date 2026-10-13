@@ -1,0 +1,10 @@
+[
+  ["TCP", "传输控制协议", "Transmission Control Protocol"],
+  ["UDP", "用户数据报协议", "User Datagram Protocol"],
+  ["IP", "网际协议", "互联网协议", "Internet Protocol"],
+  ["PCB", "进程控制块", "Process Control Block"],
+  ["CPU", "中央处理器"],
+  ["操作系统", "OS"],
+  ["三次握手", "三路握手", "3次握手"],
+  ["四次挥手", "四次握手", "4次挥手"]
+]

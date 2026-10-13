@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.cache/
+.env
+*.log
+learn/.progress.json
+learn/.scores.json
+learn/.progress.json.*
+learn/.scores.json.*
+tests/.tmp/
+scripts/screenshots/
