@@ -163,11 +163,7 @@ export function ReadingView(props: Props) {
     if (!page || page.end < page.start) {
       return (
         <section className="page" aria-hidden="true">
-          <div className="page__head">
-            <span>{perSpread === 1 ? '正文' : side === 'left' ? '左页' : '右页'}</span>
-          </div>
           <div className="page__body" />
-          <div className="page__foot">{side === 'right' && (spread === spreadCount - 1 ? '全文结束' : '')}</div>
         </section>
       );
     }
@@ -175,10 +171,6 @@ export function ReadingView(props: Props) {
     for (let i = page.start; i <= page.end; i++) indices.push(i);
     return (
       <section className="page" aria-label={`${side === 'left' ? '左' : '右'}页，第 ${(side === 'left' ? spread * perSpread : spread * 2 + 1) + 1} 页`}>
-        <div className="page__head">
-          <span>{perSpread === 1 ? '正文' : side === 'left' ? '左页' : '右页'}</span>
-          <span>{String((side === 'left' ? spread * perSpread : spread * 2 + 1) + 1)}</span>
-        </div>
         <div className={`page__body ${turning ? 'page--turning' : ''}`}>
           <div className={className}>
             {indices.map((i) => (
@@ -187,9 +179,6 @@ export function ReadingView(props: Props) {
               </div>
             ))}
           </div>
-        </div>
-        <div className="page__foot">
-          第 {spread + 1} / {spreadCount} {unit}
         </div>
       </section>
     );
