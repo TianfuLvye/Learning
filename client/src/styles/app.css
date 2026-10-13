@@ -120,22 +120,29 @@ a:hover {
   flex-shrink: 0;
 }
 
+.topbar__heading {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .topbar__title {
   font-size: 15px;
   font-weight: 600;
+  color: var(--text);
   letter-spacing: 0.01em;
-  white-space: nowrap;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 0;
 }
 
 .topbar__path {
+  flex-shrink: 0;
   font-size: 12px;
+  font-weight: 400;
   color: var(--text-3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .topbar__spacer {
@@ -1349,9 +1356,6 @@ a:hover {
     padding: 8px 12px;
     gap: 8px;
   }
-  .topbar__path {
-    display: none;
-  }
   .topbar .btn__label {
     display: none;
   }
@@ -1369,9 +1373,6 @@ a:hover {
 }
 
 @media (max-width: 560px) {
-  .topbar > .lucide-book-open {
-    display: none;
-  }
   .md {
     font-size: calc(var(--md-font-size, 17px) * 0.94);
   }

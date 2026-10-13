@@ -12,7 +12,6 @@ interface SettingsState {
   sidebarCollapsed: boolean;
   feedbackCollapsed: boolean;
   feedbackWidth: number;
-  syncedScroll: boolean;
   mode: AppMode;
   currentPath: string | null;
   setFontSize: (v: number) => void;
@@ -21,7 +20,6 @@ interface SettingsState {
   setSidebarCollapsed: (v: boolean) => void;
   setFeedbackCollapsed: (v: boolean) => void;
   setFeedbackWidth: (v: number) => void;
-  setSyncedScroll: (v: boolean) => void;
   setMode: (m: AppMode) => void;
   setCurrentPath: (p: string | null) => void;
   reset: () => void;
@@ -34,7 +32,6 @@ const defaults = {
   sidebarCollapsed: false,
   feedbackCollapsed: false,
   feedbackWidth: 460,
-  syncedScroll: true,
   mode: 'read' as AppMode,
   currentPath: null as string | null,
 };
@@ -49,7 +46,6 @@ export const useSettings = create<SettingsState>()(
       setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
       setFeedbackCollapsed: (feedbackCollapsed) => set({ feedbackCollapsed }),
       setFeedbackWidth: (feedbackWidth) => set({ feedbackWidth: clamp(feedbackWidth, 320, 900) }),
-      setSyncedScroll: (syncedScroll) => set({ syncedScroll }),
       setMode: (mode) => set({ mode }),
       setCurrentPath: (currentPath) => set({ currentPath }),
       reset: () => set({ ...defaults }),
@@ -64,7 +60,6 @@ export const useSettings = create<SettingsState>()(
         sidebarCollapsed: s.sidebarCollapsed,
         feedbackCollapsed: s.feedbackCollapsed,
         feedbackWidth: s.feedbackWidth,
-        syncedScroll: s.syncedScroll,
         mode: s.mode,
         currentPath: s.currentPath,
       }),

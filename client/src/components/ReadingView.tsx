@@ -1,7 +1,7 @@
 // 阅读模式：模拟书籍双页阅读。
 // 按顶层块分页——单个标题、段落、列表、表格、代码块不会被拆分到两页之间。
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Link2, Link2Off, ListTree } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { ClozeBlankPublic, ClozeBlankResult } from '@shared/types';
 import { useMarkdownBlocks, type MarkdownViewProps } from './MarkdownView';
 
@@ -17,8 +17,6 @@ interface Props extends Omit<MarkdownViewProps, 'className' | 'measureWidth'> {
   docKey: string;
   initialBlock: number;
   onPositionChange: (block: number) => void;
-  synced: boolean;
-  onToggleSynced: () => void;
   /** 复习模式复用同一分页结果 */
   onPagination?: (pages: Page[]) => void;
   renderKey?: string | number;
@@ -144,19 +142,6 @@ export function ReadingView(props: Props) {
     [pages, props, spread, spreadCount, perSpread],
   );
 
-  const onScroll = useCallback(
-    (side: 'left' | 'right') => (e: React.UIEvent<HTMLDivElement>) => {
-      if (!props.synced) return;
-      const src = e.currentTarget;
-      const other = document.querySelector<HTMLDivElement>(`.page__body[data-side="${side === 'left' ? 'right' : 'left'}"]`);
-      if (!other) return;
-      const ratio = src.scrollHeight > src.clientHeight ? src.scrollTop / (src.scrollHeight - src.clientHeight) : 0;
-      const target = ratio * Math.max(0, other.scrollHeight - other.clientHeight);
-      if (Math.abs(other.scrollTop - target) > 2) other.scrollTop = target;
-    },
-    [props.synced],
-  );
-
   // 键盘翻页
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -181,7 +166,7 @@ export function ReadingView(props: Props) {
           <div className="page__head">
             <span>{perSpread === 1 ? '正文' : side === 'left' ? '左页' : '右页'}</span>
           </div>
-          <div className="page__body" data-side={side} />
+          <div className="page__body" />
           <div className="page__foot">{side === 'right' && (spread === spreadCount - 1 ? '全文结束' : '')}</div>
         </section>
       );
@@ -194,7 +179,7 @@ export function ReadingView(props: Props) {
           <span>{perSpread === 1 ? '正文' : side === 'left' ? '左页' : '右页'}</span>
           <span>{String((side === 'left' ? spread * perSpread : spread * 2 + 1) + 1)}</span>
         </div>
-        <div className={`page__body ${turning ? 'page--turning' : ''}`} data-side={side} onScroll={onScroll(side)}>
+        <div className={`page__body ${turning ? 'page--turning' : ''}`}>
           <div className={className}>
             {indices.map((i) => (
               <div key={i} data-block={i}>
@@ -232,14 +217,6 @@ export function ReadingView(props: Props) {
           title="下一页（→）"
         >
           <ChevronRight size={18} />
-        </button>
-        <button
-          className="icon-btn"
-          onClick={props.onToggleSynced}
-          title={props.synced ? '关闭左右同步滚动' : '开启左右同步滚动'}
-          aria-pressed={props.synced}
-        >
-          {props.synced ? <Link2 size={17} /> : <Link2Off size={17} />}
         </button>
       </div>
 

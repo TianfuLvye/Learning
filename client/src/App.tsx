@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  BookOpen,
   CircleAlert,
   FileText,
   Loader2,
@@ -179,8 +178,6 @@ export default function App() {
           docKey={doc.path + doc.hash}
           initialBlock={positions[doc.path] ?? 0}
           onPositionChange={(b) => setPosition(doc.path, b)}
-          synced={settings.syncedScroll}
-          onToggleSynced={() => settings.setSyncedScroll(!settings.syncedScroll)}
         />
       );
     }
@@ -208,6 +205,7 @@ export default function App() {
     );
   };
 
+  const docPrefix = doc && doc.path.includes('/') ? doc.path.slice(0, doc.path.lastIndexOf('/') + 1) : '';
   const docTitle = doc?.title ?? 'Markdown 学习系统';
   const hasExercises = Boolean(sets.mcq || sets.cloze || sets.qa);
 
@@ -229,10 +227,9 @@ export default function App() {
               <PanelLeftOpen size={17} />
             </button>
           )}
-          <BookOpen size={17} color="var(--accent)" />
-          <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+          <div className="topbar__heading">
+            {docPrefix && <span className="topbar__path">{docPrefix}</span>}
             <span className="topbar__title">{docTitle}</span>
-            {doc && <span className="topbar__path">{doc.path}</span>}
           </div>
           <span className="topbar__spacer" />
 
